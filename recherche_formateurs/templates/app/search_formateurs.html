@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recherche de formateurs</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="#">
+                    <img src="{% static 'images/logo-formanetV2.png' %}" alt="Logo de l'entreprise">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">Accueil</a></li>
+                <li><a href="#">Exemple</a></li>
+                <li><a href="#">Exemple</a></li>
+                <li><a href="#">Exemple</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Recherche de formateurs</h1>
+        <form method="get" class="search-form">
+            <div class="search-row text-center d-flex justify-content-around m-3">
+                <input type="text" name="nom" value="{{ nom }}" placeholder="Nom/Prénom du formateur" class="search-input m-3">
+                <input type="text" name="domaines" value="{{ domaines }}" placeholder="Domaines (séparés par des espaces)" class="search-input m-3">
+                <input type="text" name="secteur" value="{{ secteur }}" placeholder="Secteur" class="search-input m-3">
+            </div>
+            <button type="submit" class="search-button d-flex justify-content-center mx-auto">Rechercher</button>
+        </form>
+        {% if formateurs %}
+        <ul class="formateurs-list">
+        {% for formateur in formateurs %}
+            <li>
+                {{ formateur.nom }} - <br>
+                {% for domaine in formateur.domaines.all %}{{ domaine.nom }} {% endfor %} <br>
+                {% for secteur in formateur.secteurs.all %}{{ secteur }} {% endfor %}<br>
+                Téléphone : {{ formateur.telephone }}<br>
+                Email : {{ formateur.email }}<br>
+                Adresse : {{ formateur.adresse }} <br>
+                Commentaires : <br>{{ formateur.commentaires }}<br>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun formateur trouvé.</p>
+    {% endif %}
+    </div>
+</body>
+</html>
